@@ -1,0 +1,44 @@
+name: Devsecops ci
+
+on: 
+  push:
+    branches: [master]
+  
+jobs:
+  
+  code_quality:
+    uses: ./.github/workflows/code_quality.yml
+
+  secret_scanning:
+    uses: ./.github/workflows/secret_scanning.yml
+
+  vulnerability_checker:
+    uses: ./.github/workflows/dependency_check.yml
+
+  docker-checks:
+    uses: ./.github/workflows/docker-scans.yml
+    secrets: inherit 
+  
+  sonar-qube:
+    uses: ./.github/workflows/sonar-scan.yml       #Requires server to run docker
+    secrets: inherit
+
+  code-tests:
+    uses: ./.github/workflows/code-tests.yml
+
+  docker-push:
+    uses: ./.github/workflows/docker-push.yml
+    # needs: [code_quality,code-tests,sonar-qube,docker-checks,vulnerability_checker,secret_scanning]
+    needs: [code_quality,code-tests,docker-checks,vulnerability_checker,secret_scanning]  # Sonar Qube Removed
+    secrets: inherit
+
+    ## ---- CD -----
+  deploy:
+      needs: [docker-push]
+      uses: ./.github/workflows/cd.yml
+      secrets: inherit
+
+  # dast-scan:
+  #     needs: [deploy]
+  #     uses: ./.github/workflows/dast.yml   Website live Required for this
+  #     secrets: inherit

@@ -1,0 +1,53 @@
+name: CD
+on:
+  workflow_call:
+jobs:
+  deploy: 
+    runs-on: self-hosted
+    steps:
+      - name: checkout the code
+        uses: actions/checkout@v7
+
+      - name: Verify cluster
+        run: kubectl get nodes
+
+      - name: Creating namespace
+        run: kubectl apply -f k8s/namespace.yml
+
+      - name: Create ConfigMap file
+        run: kubectl create configmap postgres-init --from-file=init/postgres -n devboard --dry-run=client -o yaml | kubectl apply -f -
+
+      - name: Create Application Secret
+        run: |
+          kubectl create secret generic dev-secret \
+            --namespace devboard \
+            --from-literal=POSTGRES_USER="${{ secrets.POSTGRES_USER }}" \
+            --from-literal=POSTGRES_PASSWORD="${{ secrets.POSTGRES_PASSWORD }}" \
+            --from-literal=POSTGRES_DB="${{ secrets.POSTGRES_DB }}" \
+            --from-literal=POSTGRES_URL="${{ secrets.POSTGRES_URL }}" \
+            --from-literal=BACKEND_PORT="${{ secrets.BACKEND_PORT }}" \
+            --from-literal=POSTGRES_HOST_PORT="${{ secrets.POSTGRES_HOST_PORT }}" \
+            --from-literal=BACKEND_HOST_PORT="${{ secrets.BACKEND_HOST_PORT }}" \
+            --from-literal=FRONTEND_HOST_PORT="${{ secrets.FRONTEND_HOST_PORT }}" \
+            --dry-run=client -o yaml | kubectl apply -f -
+
+      - name: Apply Kubernetes manifests
+        run: kubectl apply -f k8s/
+      
+      - name: Restart PostgreSQL
+        run: kubectl rollout restart statefulset/postgres-statefulset -n devboard
+
+      - name: Wait for postgres rollout
+        run: kubectl rollout status statefulset/postgres-statefulset -n devboard
+
+      - name: Restart Backend Deployment
+        run: kubectl rollout restart deployment/dev-backend-deployment -n devboard
+
+      - name: Wait for backend rollout
+        run: kubectl rollout status deployment/dev-backend-deployment -n devboard
+
+      - name: Restart frontend Deployment
+        run: kubectl rollout restart deployment/dev-frontend-deployment -n devboard
+
+      - name: Wait for frontend rollout
+        run: kubectl rollout status deployment/dev-frontend-deployment -n devboard

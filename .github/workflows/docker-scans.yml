@@ -1,0 +1,40 @@
+name: Docker file scans
+on: 
+  workflow_call:
+    
+jobs:
+  docker-scan:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        directory: ['frontend','backend']
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Lint Dockerfile for ${{ matrix.directory }}
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: ${{ matrix.directory }}/Dockerfile
+
+      - name: Docker Setup [Login]
+        uses: docker/login-action@v4
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Docker build ${{ matrix.directory }}
+        run : docker build -t ${{ vars.DOCKERHUB_USERNAME }}/devboard-${{ matrix.directory }}:latest .
+        working-directory: ${{ matrix.directory }}
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref:  ${{ vars.DOCKERHUB_USERNAME }}/devboard-${{ matrix.directory }}:latest
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: CRITICAL

@@ -1,0 +1,39 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "${POSTGRES_HOST_PORT}:5432"
+    volumes:
+      - psqlData:/var/lib/postgresql/data
+      - ./init/postgres:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL","pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  backend:
+    build: ./backend
+    image: kushagr488/devboard-backend:latest
+    environment:
+      PORT: "${BACKEND_PORT}"
+      POSTGRES_URL: "${POSTGRES_URL}"
+    ports:
+      - "${BACKEND_HOST_PORT}:${BACKEND_PORT}"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  frontend:
+    build: ./frontend
+    image: kushagr488/devboard-frontend:latest
+    ports:
+      - "${FRONTEND_HOST_PORT}:5000"
+    depends_on:
+      - backend
+volumes:
+  psqlData:
