@@ -32,7 +32,7 @@ jobs:
     needs: [code_quality,code-tests,docker-checks,vulnerability_checker,secret_scanning]  # Sonar Qube Removed
     secrets: inherit
 
-    ## ---- CD -----
+    ## ---- CD code ---
   deploy:
       needs: [docker-push]
       uses: ./.github/workflows/cd.yml
