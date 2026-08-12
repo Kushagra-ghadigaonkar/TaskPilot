@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { IconSun, IconMoon } from '@tabler/icons-react';
 
-const KEY = 'devboard.theme';
+const KEY = 'TaskPilot.theme';
 
 function readPreferred() {
   const stored = localStorage.getItem(KEY);

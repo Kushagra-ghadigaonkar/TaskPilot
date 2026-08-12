@@ -28,15 +28,14 @@ jobs:
 
   docker-push:
     uses: ./.github/workflows/docker-push.yml
-    # needs: [code_quality,code-tests,sonar-qube,docker-checks,vulnerability_checker,secret_scanning]
-    needs: [code_quality,code-tests,docker-checks,vulnerability_checker,secret_scanning]  # Sonar Qube Removed
+    needs: [code_quality,code-tests,docker-checks,vulnerability_checker,secret_scanning,sonar-qube]  # Sonar Qube Removed
     secrets: inherit
 
     ## ---- CD ---
-  deploy:
-      needs: [docker-push]
-      uses: ./.github/workflows/cd.yml
-      secrets: inherit
+  # deploy:
+  #     needs: [docker-push]
+  #     uses: ./.github/workflows/cd.yml
+  #     secrets: inherit
 
   # dast-scan:
   #     needs: [deploy]

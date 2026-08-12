@@ -1,4 +1,4 @@
-// DevBoard backend — a minimal Go + Gin REST API over PostgreSQL.
+// TaskPilot backend — a minimal Go + Gin REST API over PostgreSQL.
 //
 // This is the "advanced" branch's backend: the same React UI as the
 // fundamentals branch, but its data now comes from real HTTP endpoints
@@ -59,7 +59,7 @@ func main() {
 	shutdownTracing := initTracing(context.Background())
 	defer shutdownTracing()
 
-	dsn := env("POSTGRES_URL", "postgres://devboard:devboard@localhost:5432/devboard?sslmode=disable")
+	dsn := env("POSTGRES_URL", "postgres://TaskPilot:TaskPilot@localhost:5432/TaskPilot?sslmode=disable")
 
 	var err error
 	// otelsql.Open instead of sql.Open: it wraps the driver so every query
@@ -93,7 +93,7 @@ func main() {
 	// child, and puts that span in c.Request.Context(). Everything downstream
 	// — including the otelsql spans above — hangs off it, which is why the
 	// handlers below pass c.Request.Context() into every query.
-	r.Use(otelgin.Middleware("devboard-backend"))
+	r.Use(otelgin.Middleware("TaskPilot-backend"))
 
 	r.GET("/health", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"status": "ok", "service": "backend"})

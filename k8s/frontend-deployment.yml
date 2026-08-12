@@ -2,21 +2,21 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: dev-frontend-deployment
-  namespace: devboard
+  namespace: TaskPilot
   labels:
-    app: devboard-frontend
+    app: TaskPilot-frontend
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: devboard-frontend
+      app: TaskPilot-frontend
   template:
     metadata:
       labels: 
-        app: devboard-frontend
+        app: TaskPilot-frontend
     spec:
       containers:
-      - name: devboard-frontend-container
+      - name: TaskPilot-frontend-container
         image: kushagr488/dev-frontend:latest
         ports:
         - containerPort: 5000

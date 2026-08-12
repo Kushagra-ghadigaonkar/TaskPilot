@@ -33,7 +33,7 @@ export function DashboardPage() {
               workspace overview
             </span>
           </div>
-          <h1 className="text-[30px] font-semibold leading-none tracking-[-0.6px]">Good to see you, Shubham.</h1>
+          <h1 className="text-[30px] font-semibold leading-none tracking-[-0.6px]">Good to see you, Kushagra.</h1>
           <p className="text-[14px] text-ink-600 dark:text-ink-400 mt-2">
             HELLO DOSTO
           </p>
@@ -86,7 +86,7 @@ function HeroProgress({ done, total, pct }) {
         </span>
       </div>
       <p className="mt-1 text-[13px] text-ink-600 dark:text-ink-400">
-        tasks completed in <span className="font-mono">DevBoard MVP</span>
+        tasks completed in <span className="font-mono">TaskPilot MVP</span>
       </p>
 
       {/* progress bar */}

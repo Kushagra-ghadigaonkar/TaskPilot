@@ -11,7 +11,7 @@ import { TaskCreateModal } from '../components/tasks/TaskCreateModal';
 import { KanbanBoard } from '../components/tasks/KanbanBoard';
 
 const STATUSES = ['all', 'todo', 'in_progress', 'blocked', 'done'];
-const VIEW_KEY = 'devboard.view';
+const VIEW_KEY = 'TaskPilot.view';
 
 export function ProjectPage() {
   const { id } = useParams();
@@ -43,7 +43,7 @@ export function ProjectPage() {
             {source && <SourceBadge source={source} />}
           </div>
           <h1 className="text-[26px] font-semibold leading-none tracking-[-0.5px]">
-            DevBoard MVP
+            TaskPilot MVP
           </h1>
           <p className="text-[13.5px] text-ink-600 dark:text-ink-400 mt-1.5">
             {allTasks.length} tasks · ship the v1

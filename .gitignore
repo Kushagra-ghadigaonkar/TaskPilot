@@ -4,7 +4,7 @@ dist/
 .vite/
 
 # go
-/backend/devboard-backend
+/backend/TaskPilot-backend
 
 # env — keep .env local; the committed template is .env.example
 .env

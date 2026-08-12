@@ -1,6 +1,6 @@
 help:
 	@echo ""
-	@echo "DevBoard commands:"
+	@echo "TaskPilot commands:"
 	@echo "  make setup   create your .env file (first time only)"
 	@echo "  make up      build and start everything"
 	@echo "  make down    stop everything"

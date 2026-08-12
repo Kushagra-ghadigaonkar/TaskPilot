@@ -1,4 +1,4 @@
--- DevBoard (advanced branch) — minimal schema: projects + tasks only.
+-- TaskPilot (advanced branch) — minimal schema: projects + tasks only.
 -- No users table: this branch has no auth. assignee_id is just an int label.
 
 CREATE TABLE IF NOT EXISTS projects (

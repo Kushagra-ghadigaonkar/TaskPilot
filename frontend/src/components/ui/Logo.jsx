@@ -1,4 +1,4 @@
-// 2x2 grid of rounded squares at varying opacities, with the "DevBoard" wordmark.
+// 2x2 grid of rounded squares at varying opacities, with the "TaskPilot" wordmark.
 // Sized per brand kit: 36px icon + 20px wordmark default, 26px + 15px compact.
 
 export function Logo({ compact = false, iconOnly = false }) {
@@ -23,8 +23,8 @@ export function Logo({ compact = false, iconOnly = false }) {
         style={{ fontSize: wordmarkSize, letterSpacing: '-0.4px' }}
         className="font-semibold leading-none"
       >
-        <span className="text-ink-950 dark:text-white">Dev</span>
-        <span style={{ color: '#7F77DD' }}>Board</span>
+        <span className="text-ink-950 dark:text-white">Task</span>
+        <span style={{ color: '#7F77DD' }}>Pilot</span>
       </span>
     </div>
   );

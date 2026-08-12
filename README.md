@@ -1,6 +1,6 @@
-# DevBoard — Advanced (UI + Go + Postgres)
+# TaskPilot — Advanced (UI + Go + Postgres)
 
-This is the same DevBoard UI as the `master` branch, but now the data comes
+This is the same TaskPilot UI as the `master` branch, but now the data comes
 from a **real backend** instead of fake in-memory data.
 
 Three pieces talk to each other:
@@ -49,7 +49,7 @@ Containers can only find each other by name if they're on the **same network**.
 So first we make one:
 
 ```bash
-docker network create devboard-net
+docker network create TaskPilot-net
 ```
 
 ### Step 2: Build the images
@@ -59,8 +59,8 @@ database is not our code — it's the official Postgres image — so there's
 nothing to build for it.
 
 ```bash
-docker build -t devboard-frontend ./frontend
-docker build -t devboard-backend ./backend
+docker build -t TaskPilot-frontend ./frontend
+docker build -t TaskPilot-backend ./backend
 ```
 
 The first build downloads base images and compiles the code, so it can take a
@@ -72,10 +72,10 @@ We name it `postgres`. The backend will look for it by that exact name. The
 `-v ./init/postgres:...` line loads the example data the first time it starts.
 
 ```bash
-docker run -d --name postgres --network devboard-net \
-  -e POSTGRES_USER=devboard \
-  -e POSTGRES_PASSWORD=devboard \
-  -e POSTGRES_DB=devboard \
+docker run -d --name postgres --network TaskPilot-net \
+  -e POSTGRES_USER=TaskPilot \
+  -e POSTGRES_PASSWORD=TaskPilot \
+  -e POSTGRES_DB=TaskPilot \
   -v "$PWD/init/postgres":/docker-entrypoint-initdb.d:ro \
   -p 5432:5432 \
   postgres:16-alpine
@@ -87,11 +87,11 @@ We name it `backend` (the frontend looks for this name). We also tell it how to
 reach the database with `POSTGRES_URL` — notice it uses the name `postgres`.
 
 ```bash
-docker run -d --name backend --network devboard-net \
+docker run -d --name backend --network TaskPilot-net \
   -e PORT=8080 \
-  -e POSTGRES_URL="postgres://devboard:devboard@postgres:5432/devboard?sslmode=disable" \
+  -e POSTGRES_URL="postgres://TaskPilot:TaskPilot@postgres:5432/TaskPilot?sslmode=disable" \
   -p 8081:8080 \
-  devboard-backend
+  TaskPilot-backend
 ```
 
 ### Step 5: Run the frontend
@@ -100,14 +100,14 @@ It serves the app on port 4173 inside the container; we map it to 8080 on your
 machine.
 
 ```bash
-docker run -d --name frontend --network devboard-net \
+docker run -d --name frontend --network TaskPilot-net \
   -p 8080:4173 \
-  devboard-frontend
+  TaskPilot-frontend
 ```
 
 ### Step 6: Open it and check
 
-Open **http://localhost:8080** in your browser — you should see the DevBoard
+Open **http://localhost:8080** in your browser — you should see the TaskPilot
 dashboard with some example tasks. (If the page shows an error for a second on
 first load, the backend is still starting up — just refresh.)
 
@@ -122,7 +122,7 @@ curl "http://localhost:8080/api/tasks?project_id=1"    # app → backend → dat
 
 ```bash
 docker rm -f frontend backend postgres
-docker network rm devboard-net
+docker network rm TaskPilot-net
 ```
 
 ### The one thing to remember: names
@@ -130,7 +130,7 @@ docker network rm devboard-net
 The backend finds the database using the name `postgres` (see `POSTGRES_URL`).
 The frontend finds the backend using the name `backend` (see
 `frontend/vite.config.js`). So those container **names must match**, and they
-only work because everything is on the same `devboard-net` network.
+only work because everything is on the same `TaskPilot-net` network.
 
 That's a lot of typing, and you have to start them in the right order. This is
 exactly the problem Docker Compose solves.
@@ -168,7 +168,7 @@ docker compose down
 | -------- | ----------------------------- | --------------------------------------- |
 | Frontend | http://localhost:8080         | the app; forwards `/api` to the backend |
 | Backend  | http://localhost:8081/health  | the Go API (the app uses it via `/api`) |
-| Postgres | localhost:5432                | user / password: `devboard` / `devboard`|
+| Postgres | localhost:5432                | user / password: `TaskPilot` / `TaskPilot`|
 
 ---
 
@@ -247,7 +247,7 @@ Pushing to the `mega-project` branch runs the pipeline in
 2. **Build & push** — once every gate passes, each service image is built and
    pushed to Docker Hub tagged with the commit SHA.
 3. **GitOps bump** — the new SHA tags are written into `k8s/` and
-   `helm/devboard/values.yaml` and committed back. Argo CD (watching this
+   `helm/TaskPilot/values.yaml` and committed back. Argo CD (watching this
    branch) then syncs the change to the cluster — **CI never touches the
    cluster directly**.
 

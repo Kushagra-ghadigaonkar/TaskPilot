@@ -2,10 +2,10 @@ kind: Service
 apiVersion: v1
 metadata:
   name: backend
-  namespace: devboard
+  namespace: TaskPilot
 spec:
   selector:
-    app: devboard-backend
+    app: TaskPilot-backend
   ports:
   - protocol: TCP
     port: 8080

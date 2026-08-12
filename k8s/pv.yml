@@ -12,4 +12,4 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-storage
   hostPath:
-    path: /mnt/devboard/data
+    path: /mnt/TaskPilot/data

@@ -1,4 +1,4 @@
-module devboard-backend
+module TaskPilot-backend
 
 go 1.25.0
 

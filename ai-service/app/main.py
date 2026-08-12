@@ -8,7 +8,7 @@ Flow per request:
 This is the one place a synchronous service-to-service call is correct — the AI
 cannot answer without the task context, so we pay that cost in the request path.
 
-No auth: this DevBoard has no login, so the service is open within the cluster
+No auth: this TaskPilot has no login, so the service is open within the cluster
 (the Gateway only exposes it under /api/ai).
 """
 

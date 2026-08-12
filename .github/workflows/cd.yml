@@ -15,12 +15,12 @@ jobs:
         run: kubectl apply -f k8s/namespace.yml
 
       - name: Create ConfigMap file
-        run: kubectl create configmap postgres-init --from-file=init/postgres -n devboard --dry-run=client -o yaml | kubectl apply -f -
+        run: kubectl create configmap postgres-init --from-file=init/postgres -n TaskPilot --dry-run=client -o yaml | kubectl apply -f -
 
       - name: Create Application Secret
         run: |
           kubectl create secret generic dev-secret \
-            --namespace devboard \
+            --namespace TaskPilot \
             --from-literal=POSTGRES_USER="${{ secrets.POSTGRES_USER }}" \
             --from-literal=POSTGRES_PASSWORD="${{ secrets.POSTGRES_PASSWORD }}" \
             --from-literal=POSTGRES_DB="${{ secrets.POSTGRES_DB }}" \
@@ -35,19 +35,19 @@ jobs:
         run: kubectl apply -f k8s/
       
       - name: Restart PostgreSQL
-        run: kubectl rollout restart statefulset/postgres-statefulset -n devboard
+        run: kubectl rollout restart statefulset/postgres-statefulset -n TaskPilot
 
       - name: Wait for postgres rollout
-        run: kubectl rollout status statefulset/postgres-statefulset -n devboard
+        run: kubectl rollout status statefulset/postgres-statefulset -n TaskPilot
 
       - name: Restart Backend Deployment
-        run: kubectl rollout restart deployment/dev-backend-deployment -n devboard
+        run: kubectl rollout restart deployment/dev-backend-deployment -n TaskPilot
 
       - name: Wait for backend rollout
-        run: kubectl rollout status deployment/dev-backend-deployment -n devboard
+        run: kubectl rollout status deployment/dev-backend-deployment -n TaskPilot
 
       - name: Restart frontend Deployment
-        run: kubectl rollout restart deployment/dev-frontend-deployment -n devboard
+        run: kubectl rollout restart deployment/dev-frontend-deployment -n TaskPilot
 
       - name: Wait for frontend rollout
-        run: kubectl rollout status deployment/dev-frontend-deployment -n devboard
+        run: kubectl rollout status deployment/dev-frontend-deployment -n TaskPilot

@@ -3,11 +3,11 @@ WORKDIR /app
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
-RUN CGO_ENABLED=0 go build -o devboard-backend .
+RUN CGO_ENABLED=0 go build -o TaskPilot-backend .
 
 FROM cgr.dev/chainguard/static:latest@sha256:24dd7ff8788fdfadda39eeeaefefb6d1cec6002a545935a5f7e017484053734f
 WORKDIR /
-COPY --from=builder /app/devboard-backend /devboard-backend
+COPY --from=builder /app/TaskPilot-backend /TaskPilot-backend
 USER nonroot
 EXPOSE 8080
-ENTRYPOINT ["./devboard-backend"]
+ENTRYPOINT ["./TaskPilot-backend"]

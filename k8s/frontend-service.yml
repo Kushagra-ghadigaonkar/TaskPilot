@@ -2,10 +2,10 @@ kind: Service
 apiVersion: v1
 metadata:
   name: frontend-service
-  namespace: devboard
+  namespace: TaskPilot
 spec:
   selector:
-    app: devboard-frontend
+    app: TaskPilot-frontend
   ports:
   - protocol: TCP
     port: 8081

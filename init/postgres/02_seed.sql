@@ -1,9 +1,9 @@
 -- Seed data so the UI has something to render on first boot.
--- Mirrors the fundamentals branch's mock store: "DevBoard MVP" (id 1) with
+-- Mirrors the fundamentals branch's mock store: "TaskPilot MVP" (id 1) with
 -- 8 tasks across statuses, plus a small second project.
 
 INSERT INTO projects (id, name, description, owner_id) VALUES
-    (1, 'DevBoard MVP',   'Ship the v1 task tracker', 1),
+    (1, 'TaskPilot MVP',   'Ship the v1 task tracker', 1),
     (2, 'Marketing Site', 'Landing page + launch blog', 1)
 ON CONFLICT (id) DO NOTHING;
 

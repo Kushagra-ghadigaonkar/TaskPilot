@@ -2,7 +2,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: postgres
-  namespace: devboard
+  namespace: TaskPilot
 spec:
   clusterIP: None
   selector:
