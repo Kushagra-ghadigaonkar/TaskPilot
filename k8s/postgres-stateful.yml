@@ -2,7 +2,7 @@ kind: StatefulSet
 apiVersion: apps/v1
 metadata:
   name: postgres-statefulset
-  namespace: TaskPilot
+  namespace: taskpilot
   labels:
     app: postgres-app
 spec:
@@ -42,7 +42,7 @@ spec:
   volumeClaimTemplates:
     - metadata:
         name: data
-        namespace: TaskPilot
+        namespace: taskpilot
       spec:
         storageClassName: local-storage
         accessModes:

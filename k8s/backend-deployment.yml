@@ -1,23 +1,23 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: dev-backend-deployment
-  namespace: TaskPilot
+  name: backend-deployment
+  namespace: taskpilot
   labels:
-    app: TaskPilot-backend
+    app: taskpilot-backend
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: TaskPilot-backend
+      app: taskpilot-backend
   template:
     metadata:
       labels: 
-        app: TaskPilot-backend
+        app: taskpilot-backend
     spec:
       containers:
-      - name: TaskPilot-backend-container
-        image: kushagr488/dev-backend:latest
+      - name: taskpilot-backend-container
+        image: kushagr488/taskpilot-backend:latest
         ports:
         - containerPort: 8080
         envFrom:

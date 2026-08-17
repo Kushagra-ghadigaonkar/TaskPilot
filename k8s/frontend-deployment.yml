@@ -1,22 +1,22 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: dev-frontend-deployment
-  namespace: TaskPilot
+  name: frontend-deployment
+  namespace: taskpilot
   labels:
-    app: TaskPilot-frontend
+    app: taskpilot-frontend
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: TaskPilot-frontend
+      app: taskpilot-frontend
   template:
     metadata:
       labels: 
-        app: TaskPilot-frontend
+        app: taskpilot-frontend
     spec:
       containers:
-      - name: TaskPilot-frontend-container
-        image: kushagr488/dev-frontend:latest
+      - name: taskpilot-frontend-container
+        image: kushagr488/taskpilot-frontend:latest
         ports:
         - containerPort: 5000
