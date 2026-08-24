@@ -6,6 +6,10 @@ metadata:
 spec:
   parentRefs:
     - name: taskpilot-gateway
+
+  hostnames:
+    - "kushagra.local"
+
   rules:
     # Exact, not PathPrefix: a prefix once exposed /api/ai/metrics. The vite proxy was a second door.
     # - matches:
@@ -62,4 +66,4 @@ spec:
             value: /
       backendRefs:
         - name: frontend-service
-          port: 8080
+          port: 8081
