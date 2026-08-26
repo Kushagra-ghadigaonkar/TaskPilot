@@ -1,21 +1,21 @@
-# OpenTelemetry Collector, per-node agent. Wave 2: it forwards to the gateway.
+# Tempo - trace storage. Wave 1: the Collector needs it before it can export.
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: observability-collector-agent
+  name: observability-tempo
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   project: default
 
   sources:
-    - repoURL: https://open-telemetry.github.io/opentelemetry-helm-charts
-      chart: opentelemetry-collector
-      targetRevision: "0.169.0"
+    - repoURL: https://grafana-community.github.io/helm-charts
+      chart: tempo
+      targetRevision: "2.2.3"
       helm:
         valueFiles:
-          - $values/gitops/observability/collector-agent-values.yaml
+          - $values/gitops/observability/tempo-values.yml
 
     - repoURL: https://github.com/Kushagra-ghadigaonkar/TaskPilot.git
       targetRevision: mega-project

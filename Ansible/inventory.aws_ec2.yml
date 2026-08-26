@@ -1,0 +1,18 @@
+plugin: amazon.aws.aws_ec2
+boto_profile: default
+
+regions:
+  - us-east-1
+
+filters:
+  tag:Environment: production
+  tag:Role: application
+
+keyed_groups:
+  - key: ec2_tags.Role
+    prefix: role
+  - key: ec2_tags.Environment
+    prefix: env
+
+compose:
+  ansible_host: public_ip_address

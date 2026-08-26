@@ -1,21 +1,21 @@
-# Grafana. Wave 3: its datasources reference Services that must already exist.
+# Loki - log storage. Wave 1: the Collector needs it before it can export.
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: observability-grafana
+  name: observability-loki
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "3"
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   project: default
 
   sources:
     - repoURL: https://grafana-community.github.io/helm-charts
-      chart: grafana
-      targetRevision: "12.10.4"
+      chart: loki
+      targetRevision: "18.7.5"
       helm:
         valueFiles:
-          - $values/gitops/observability/grafana-values.yaml
+          - $values/gitops/observability/loki-values.yml
 
     - repoURL: https://github.com/Kushagra-ghadigaonkar/TaskPilot.git
       targetRevision: mega-project

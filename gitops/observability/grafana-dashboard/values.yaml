@@ -1,0 +1,12 @@
+dashboard:
+  enabled: true
+
+  name: kubernetes-production
+
+  title: Kubernetes Production Overview
+
+grafana:
+  dashboardLabel: grafana_dashboard
+
+  # Namespace where Grafana is running.
+  namespace: observability

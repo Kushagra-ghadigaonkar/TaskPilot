@@ -1,0 +1,39 @@
+{
+    "title": "Kubernetes Overview",
+    "annotations": {
+        "list": [
+            {
+                "builtIn": 1,
+                "datasource": {
+                    "type": "grafana",
+                    "uid": "-- Grafana --"
+                },
+                "enable": true,
+                "hide": true,
+                "iconColor": "rgba(0, 211, 255, 1)",
+                "name": "Annotations & Alerts",
+                "type": "dashboard"
+            }
+        ]
+    },
+    "editable": true,
+    "graphTooltip": 1,
+    "panels": [
+        {
+            "type": "timeseries",
+            "title": "CPU Usage by Pod",
+            "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+            },
+            "targets": [
+                {
+                    "expr": "sum by (namespace, pod) (rate(container_cpu_usage_seconds_total{container!=\"\",container!=\"POD\",namespace=~\"$namespace\",pod=~\"$pod\"}[5m]))",
+                    "legendFormat": "{{namespace}}/{{pod}}",
+                    "refId": "A"
+                }
+            ]
+        }
+    ]
+    
+}

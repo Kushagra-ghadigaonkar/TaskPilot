@@ -1,8 +1,8 @@
-# OpenTelemetry Collector, gateway role. Wave 2: its exporters need Tempo, Loki and Prometheus.
+# OpenTelemetry Collector, per-node agent. Wave 2: it forwards to the gateway.
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: observability-collector-gateway
+  name: observability-collector-agent
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "2"
@@ -15,7 +15,7 @@ spec:
       targetRevision: "0.169.0"
       helm:
         valueFiles:
-          - $values/gitops/observability/collector-gateway-values.yaml
+          - $values/gitops/observability/collector-agent-values.yml
 
     - repoURL: https://github.com/Kushagra-ghadigaonkar/TaskPilot.git
       targetRevision: mega-project

@@ -32,7 +32,7 @@ singleBinary:
   replicas: 1
   persistence:
     enabled: true
-    storageClass: gp3
+    storageClass: standard # its for local change it for production to gp3
     size: 10Gi
   resources:
     requests:

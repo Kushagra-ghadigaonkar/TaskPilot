@@ -41,6 +41,8 @@ module "eks" {
     }
     tags = {
       NodeGroup = "default"
+      Environment = "production"
+      Role = "application"
     }
   }
   addons = {

@@ -1,0 +1,14 @@
+- name: Clone the taskpilot repo
+  hosts: role_application
+  become: true
+
+  tasks:
+    - name: Clone the repo
+      ansible.builtin.git:
+        repo: "{{ repo_url }}"
+        dest: "/home/{{ login_user }}/taskpilot"
+        version: "{{ repo_branch }}"
+        # false so a re-run never throws away local edits
+        update: false
+      become: true
+      become_user: "{{ login_user }}"

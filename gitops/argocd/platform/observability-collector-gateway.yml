@@ -1,21 +1,21 @@
-# Loki - log storage. Wave 1: the Collector needs it before it can export.
+# OpenTelemetry Collector, gateway role. Wave 2: its exporters need Tempo, Loki and Prometheus.
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: observability-loki
+  name: observability-collector-gateway
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   project: default
 
   sources:
-    - repoURL: https://grafana-community.github.io/helm-charts
-      chart: loki
-      targetRevision: "18.7.5"
+    - repoURL: https://open-telemetry.github.io/opentelemetry-helm-charts
+      chart: opentelemetry-collector
+      targetRevision: "0.169.0"
       helm:
         valueFiles:
-          - $values/gitops/observability/loki-values.yaml
+          - $values/gitops/observability/collector-gateway-values.yml
 
     - repoURL: https://github.com/Kushagra-ghadigaonkar/TaskPilot.git
       targetRevision: mega-project

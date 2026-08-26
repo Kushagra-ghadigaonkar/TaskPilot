@@ -1,21 +1,21 @@
-# Prometheus, the Prometheus Operator, kube-state-metrics and node-exporter.
+# Grafana. Wave 3: its datasources reference Services that must already exist.
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: observability-prometheus
+  name: observability-grafana
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "3"
 spec:
   project: default
 
   sources:
-    - repoURL: https://prometheus-community.github.io/helm-charts
-      chart: kube-prometheus-stack
-      targetRevision: "88.2.0"
+    - repoURL: https://grafana-community.github.io/helm-charts
+      chart: grafana
+      targetRevision: "12.10.4"
       helm:
         valueFiles:
-          - $values/gitops/observability/prometheus-values.yaml
+          - $values/gitops/observability/grafana-values.yml
 
     - repoURL: https://github.com/Kushagra-ghadigaonkar/TaskPilot.git
       targetRevision: mega-project

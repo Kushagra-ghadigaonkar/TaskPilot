@@ -23,7 +23,7 @@ tempo:
 
 persistence:
   enabled: true
-  storageClassName: gp3
+#  storageClassName: gp3
   size: 10Gi
 
 resources:

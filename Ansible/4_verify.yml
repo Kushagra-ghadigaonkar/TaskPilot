@@ -1,0 +1,50 @@
+- name: Verify the machine is ready
+  hosts: role_application
+  become: true
+
+  tasks:
+    - name: Check every tool works
+      ansible.builtin.command:
+        cmd: "{{ item }}"
+      loop:
+        - aws --version
+        - terraform version
+        - kubectl version --client
+        - helm version --short
+        - jq --version
+        - dig -v
+        - git --version
+        - gh --version
+      register: tool_check
+      changed_when: false
+
+    - name: Show the versions
+      ansible.builtin.debug:
+        msg: "{{ (item.stdout or item.stderr).splitlines() | first }}"
+      loop: "{{ tool_check.results }}"
+      loop_control:
+        label: "{{ item.item }}"
+
+    - name: Check Terraform is new enough
+      ansible.builtin.command:
+        cmd: terraform version -json
+      register: tf_version
+      changed_when: false
+
+    - name: Fail if Terraform is too old
+      ansible.builtin.assert:
+        that:
+          - (tf_version.stdout | from_json).terraform_version is version('1.11.0', '>=')
+        fail_msg: >-
+          Terraform {{ (tf_version.stdout | from_json).terraform_version }} is too
+          old. Deploy.md needs 1.11 or newer for S3 state locking.
+        success_msg: "Terraform {{ (tf_version.stdout | from_json).terraform_version }} is fine."
+
+    - name: Check AWS accepts your credentials
+      ansible.builtin.command:
+        cmd: aws sts get-caller-identity --output json
+      become: true
+      become_user: "{{ login_user }}"
+      register: aws_identity
+      changed_when: false
+      failed_when: false

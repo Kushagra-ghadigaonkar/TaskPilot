@@ -43,3 +43,9 @@ terraform/backend.hcl
 #                         it is Terraform's package-lock.json.
 #   terraform.tfvars      teaching defaults with no secrets in them.
 secrets.yml
+/Ansible/Variables/var.yml
+
+
+cert-manager-config.yml
+cert-manager.yml
+observability-dashboard.yml

@@ -1,0 +1,7 @@
+aws_region: us-east-1
+login_user: ubuntu
+kubectl_version: v1.34
+aws_access_key: "AKIA47CR2MHHJXGVQCNQ"
+aws_secret_key: "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"
+repo_url: "https://github.com/Kushagra-ghadigaonkar/TaskPilot"
+repo_branch: main
