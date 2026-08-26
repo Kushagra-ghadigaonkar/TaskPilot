@@ -50,6 +50,11 @@ else
     echo -e "\nArgo CD service:"
     kubectl get svc argocd-server -n argocd
 
+    echo -e "\nArgo CD admin credentials:"
+    echo "Username: admin"
+    echo -n "Password: "
+    kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+
     echo -e "\nPortforwarding your argo cd server ..."
     echo -e "\nUse This cmd to port-forward: kubectl port-forward svc/argocd-server -n argocd 8080:443 "
 fi
