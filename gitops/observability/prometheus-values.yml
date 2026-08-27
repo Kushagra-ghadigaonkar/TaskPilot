@@ -6,11 +6,7 @@ alertmanager:
     alertmanagerConfigSelector:
       matchLabels:
         alertmanagerConfig: slack
-
-    alertmanagerConfigNamespaceSelector:
-      matchNames:
-        - observability
-
+        
 kubeStateMetrics:
   enabled: true
 
