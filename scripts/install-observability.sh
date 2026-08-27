@@ -93,3 +93,6 @@ echo -e "\nTempo : kubectl port-forward svc/tempo 3200:3200 -n observability"
 echo -e "\nOTEL Collector Gateway (GRPC): kubectl port-forward svc/otel-collector-gateway 4317:4317 -n observability"
 echo -e "\nOTEL Collector Gateway (HTTP): kubectl port-forward svc/otel-collector-gateway 4318:4318 -n observability"
 echo -e "\nOTEL Collector Prometheus Exporter : kubectl port-forward svc/otel-collector-gateway 8889:8889 -n observability"
+
+
+# kubectl port-forward svc/observability-grafana  3000:80 -n observability
