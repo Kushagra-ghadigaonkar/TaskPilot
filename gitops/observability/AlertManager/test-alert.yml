@@ -37,3 +37,17 @@ spec:
             summary: "Test Slack alert"
 
             description: "This is a test alert from Prometheus."
+            
+        - alert: Test3Alert
+
+          expr: vector(1)
+
+          for: 1m
+
+          labels:
+            severity: critical
+
+          annotations:
+            summary: "Test Slack alert"
+
+            description: "This is a test alert from Prometheus."
