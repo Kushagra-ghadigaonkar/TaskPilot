@@ -3,12 +3,17 @@ grafana:
 alertmanager:
   enabled: true
   alertmanagerSpec:
-    secrets:
-      - alertmanager-slack
+    alertmanagerConfigSelector:
+      matchLabels:
+        alertmanagerConfig: slack
+
+    alertmanagerConfigNamespaceSelector:
+      matchNames:
+        - observability
 
 kubeStateMetrics:
   enabled: true
-  
+
 nodeExporter:
   enabled: true
 

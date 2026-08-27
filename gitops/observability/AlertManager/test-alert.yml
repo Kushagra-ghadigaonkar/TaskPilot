@@ -1,0 +1,25 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+
+metadata:
+  name: test-slack-alert
+  namespace: observability
+
+spec:
+  groups:
+    - name: test.rules
+
+      rules:
+        - alert: TestSlackAlert
+
+          expr: vector(1)
+
+          for: 1m
+
+          labels:
+            severity: critical
+
+          annotations:
+            summary: "Test Slack alert"
+
+            description: "This is a test alert from Prometheus."

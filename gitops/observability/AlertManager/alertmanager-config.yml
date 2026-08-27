@@ -4,6 +4,8 @@ kind: AlertmanagerConfig
 metadata:
   name: slack-alerts
   namespace: observability
+  labels:
+    alertmanagerConfig: slack
 
 spec:
   route:
