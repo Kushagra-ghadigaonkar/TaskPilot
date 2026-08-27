@@ -1,10 +1,14 @@
 grafana:
   enabled: false
 alertmanager:
-  enabled: false
+  enabled: true
+  alertmanagerSpec:
+    secrets:
+      - alertmanager-slack
 
 kubeStateMetrics:
   enabled: true
+  
 nodeExporter:
   enabled: true
 
