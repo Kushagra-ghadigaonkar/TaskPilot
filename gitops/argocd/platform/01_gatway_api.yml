@@ -10,13 +10,13 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/kubernetes-sigs/gateway-api
-    targetRevision: v1.4.1
-    path: config/crd/standard
+    repoURL: https://github.com/Kushagra-ghadigaonkar/TaskPilot
+    targetRevision: main
+    path: gitops/argocd/gateway-api
 
   destination:
     server: https://kubernetes.default.svc
-    namespace: gateway-system
+    namespace: default
 
   syncPolicy:
     automated:
@@ -24,5 +24,4 @@ spec:
       selfHeal: true
 
     syncOptions:
-      - CreateNamespace=true
       - ServerSideApply=true
