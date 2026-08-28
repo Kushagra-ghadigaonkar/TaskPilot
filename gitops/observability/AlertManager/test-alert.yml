@@ -1,53 +1,53 @@
-apiVersion: monitoring.coreos.com/v1
-kind: PrometheusRule
+# apiVersion: monitoring.coreos.com/v1
+# kind: PrometheusRule
 
-metadata:
-  name: test-slack-alert
-  namespace: observability
+# metadata:
+#   name: test-slack-alert
+#   namespace: observability
 
-spec:
-  groups:
-    - name: test.rules
+# spec:
+#   groups:
+#     - name: test.rules
 
-      rules:
-        - alert: TestSlackAlert
+#       rules:
+#         - alert: TestSlackAlert
 
-          expr: vector(1)
+#           expr: vector(1)
 
-          for: 1m
+#           for: 1m
 
-          labels:
-            severity: critical
+#           labels:
+#             severity: critical
 
-          annotations:
-            summary: "Test Slack alert"
+#           annotations:
+#             summary: "Test Slack alert"
 
-            description: "This is a test alert from Prometheus."
+#             description: "This is a test alert from Prometheus."
 
-        - alert: Test2Alert
+#         - alert: Test2Alert
 
-          expr: vector(1)
+#           expr: vector(1)
 
-          for: 1m
+#           for: 1m
 
-          labels:
-            severity: critical
+#           labels:
+#             severity: critical
 
-          annotations:
-            summary: "Test Slack alert"
+#           annotations:
+#             summary: "Test Slack alert"
 
-            description: "This is a test alert from Prometheus."
-            
-        - alert: Test3Alert
+#             description: "This is a test alert from Prometheus."
 
-          expr: vector(1)
+#         - alert: Test3Alert
 
-          for: 1m
+#           expr: vector(1)
 
-          labels:
-            severity: critical
+#           for: 1m
 
-          annotations:
-            summary: "Test Slack alert"
+#           labels:
+#             severity: critical
 
-            description: "This is a test alert from Prometheus."
+#           annotations:
+#             summary: "Test Slack alert"
+
+#             description: "This is a test alert from Prometheus."

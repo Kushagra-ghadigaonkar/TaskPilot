@@ -49,3 +49,6 @@ secrets.yml
 cert-manager-config.yml
 cert-manager.yml
 observability-dashboard.yml
+slack-apiurl.yml
+observability-tempo.yml
+observability-loki.yml

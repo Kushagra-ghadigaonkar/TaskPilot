@@ -46,6 +46,8 @@ compose:
 ## Command to execute inventory.ini for ping to ec2 instance
 ```
 ansible -i inventory.aws_ec2.yml all -m ping -u ubuntu --private-key Ansible-Key.pem --ask-vault-pass
+
+ANSIBLE_HOST_KEY_CHECKING=False ansible -i inventory.aws_ec2.yml all -m ping --ask-vault-pass
 ```
 
 ## Command to execute .yml file 

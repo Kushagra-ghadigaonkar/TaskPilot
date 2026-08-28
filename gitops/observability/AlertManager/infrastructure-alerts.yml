@@ -1,0 +1,33 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: infrastructure-alerts
+  namespace: observability
+spec:
+  groups:
+    - name: infrastructure.rules
+      rules:
+
+        - alert: HighNodeCPU
+          expr: |
+            100 * (1 - avg by (instance) (
+              rate(node_cpu_seconds_total{mode="idle"}[5m])
+            )) > 80
+          for: 5m
+          labels:
+            severity: warning
+            namespace: observability
+          annotations:
+            summary: "High CPU usage on node"
+            description: "Node {{ $labels.instance }} CPU usage is above 80% for 5 minutes."
+
+        - alert: PodCrashed
+          expr: |
+            increase(kube_pod_container_status_restarts_total[5m]) > 0
+          for: 1m
+          labels:
+            severity: critical
+            namespace: observability
+          annotations:
+            summary: "Pod container crashed"
+            description: "Container {{ $labels.container }} in pod {{ $labels.namespace }}/{{ $labels.pod }} has restarted in the last 5 minutes."

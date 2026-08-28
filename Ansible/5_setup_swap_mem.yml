@@ -1,0 +1,40 @@
+- name: Automate swap memory creation
+  hosts: all 
+  become: yes
+  vars:
+    swap_file_path: "/swapfile"
+    swap_size_mb: 4096
+    sysctl_swappiness: 10
+
+  tasks:
+    - name: Allocate space for the swap file
+      command: "fallocate -l {{ swap_size_mb }}M {{ swap_file_path }}"
+      args:
+        creates: "{{ swap_file_path }}"
+
+    - name: Set correct security permissions on the swap file
+      file:
+        path: "{{ swap_file_path }}"
+        owner: root
+        group: root
+        mode: "0600"
+
+    - name: Format the file as linux swap space
+      command: "mkswap {{ swap_file_path }}"
+
+    - name: Enable the swap file
+      command: "swapon {{ swap_file_path }}"
+      ignore_errors: true
+
+    - name: Ensure swap persists accross system reboots
+      lineinfile:
+        path: /etc/fstab
+        line: "{{ swap_file_path }} none swap sw 0 0"
+        state: present
+    
+    - name: Optimize kernel swappiness configuration
+      sysctl:
+        name: vm.swappiness
+        value: "{{ sysctl_swappiness }}"
+        state: present
+        reload: yes
