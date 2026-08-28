@@ -19,7 +19,7 @@ variable "kubernetes_version" {
 variable "node_instance_type" {
   description = "To denote ec2_instance_type"
   type        = string
-  default     = "t2.micro"
+  default     = "t2.medium"
 }
 
 variable "node_desired_size" {
@@ -37,13 +37,13 @@ variable "node_min_size" {
 variable "node_max_size" {
   description = "Maximum nodes"
   type        = number
-  default     = 2
+  default     = 1
 }
 
 variable "node_disk_size" {
   description = "Ebs volume size"
   type        = number
-  default     = 8
+  default     = 10
 }
 
 variable "postgres_secret_name" {
@@ -61,7 +61,7 @@ variable "intern_iam_principal_arn" {
 variable "enable_argocd" {
   description = "Install ArgoCD via Helm from Terraform."
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "argocd_chart_version" {

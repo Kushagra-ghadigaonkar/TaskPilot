@@ -23,7 +23,7 @@ spec:
             - containerPort: 5432
           envFrom:
             - secretRef:
-                name: dev-secret
+                name: taskpilot-secrets
           readinessProbe:
             exec: 
               command: ["sh","-c","pg_isready -U $(POSTGRES_USER) -d $(POSTGRES_DB)"]

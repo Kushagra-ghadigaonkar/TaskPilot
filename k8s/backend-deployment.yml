@@ -22,5 +22,5 @@ spec:
         - containerPort: 8080
         envFrom:
           - secretRef:
-              name: dev-secret
+              name: taskpilot-secrets
 
