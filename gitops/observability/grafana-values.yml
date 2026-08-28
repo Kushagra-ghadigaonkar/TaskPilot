@@ -158,51 +158,51 @@ datasources:
             - name: trace_id
               datasourceUid: tempo
 
-      - name: Loki
-        type: loki
-        uid: loki
-        url: http://loki.observability.svc.cluster.local:3100
-        access: proxy
-        jsonData:
-          derivedFields:
-            - name: trace_id
-              matcherType: label
-              matcherRegex: trace_id
-              datasourceUid: tempo
-              url: "$${__value.raw}"
-            - name: TraceID
-              matcherType: regex
-              matcherRegex: "trace_id=(\\w+)"
-              datasourceUid: tempo
-              url: "$${__value.raw}"
+      # - name: Loki
+      #   type: loki
+      #   uid: loki
+      #   url: http://loki.observability.svc.cluster.local:3100
+      #   access: proxy
+      #   jsonData:
+      #     derivedFields:
+      #       - name: trace_id
+      #         matcherType: label
+      #         matcherRegex: trace_id
+      #         datasourceUid: tempo
+      #         url: "$${__value.raw}"
+      #       - name: TraceID
+      #         matcherType: regex
+      #         matcherRegex: "trace_id=(\\w+)"
+      #         datasourceUid: tempo
+      #         url: "$${__value.raw}"
 
-      - name: Tempo
-        type: tempo
-        uid: tempo
-        url: http://tempo.observability.svc.cluster.local:3200
-        access: proxy
-        jsonData:
-          tracesToLogsV2:
-            datasourceUid: loki
-            spanStartTimeShift: "-2m"
-            spanEndTimeShift: "2m"
-            filterByTraceID: true
-            filterBySpanID: false
-            tags:
-              - key: k8s.namespace.name
-                value: k8s_namespace_name
-              - key: k8s.pod.name
-                value: k8s_pod_name
+      # - name: Tempo
+      #   type: tempo
+      #   uid: tempo
+      #   url: http://tempo.observability.svc.cluster.local:3200
+      #   access: proxy
+      #   jsonData:
+      #     tracesToLogsV2:
+      #       datasourceUid: loki
+      #       spanStartTimeShift: "-2m"
+      #       spanEndTimeShift: "2m"
+      #       filterByTraceID: true
+      #       filterBySpanID: false
+      #       tags:
+      #         - key: k8s.namespace.name
+      #           value: k8s_namespace_name
+      #         - key: k8s.pod.name
+      #           value: k8s_pod_name
 
-          tracesToMetrics:
-            datasourceUid: prometheus
-            spanStartTimeShift: "-2m"
-            spanEndTimeShift: "2m"
-            queries:
-              - name: "Request rate"
-                query: 'sum(rate(traces_span_metrics_calls_total{$$__tags}[5m]))'
-              - name: "p95 latency"
-                query: 'histogram_quantile(0.95, sum(rate(traces_span_metrics_duration_seconds_bucket{$$__tags}[5m])) by (le))'
+      #     tracesToMetrics:
+      #       datasourceUid: prometheus
+      #       spanStartTimeShift: "-2m"
+      #       spanEndTimeShift: "2m"
+      #       queries:
+      #         - name: "Request rate"
+      #           query: 'sum(rate(traces_span_metrics_calls_total{$$__tags}[5m]))'
+      #         - name: "p95 latency"
+      #           query: 'histogram_quantile(0.95, sum(rate(traces_span_metrics_duration_seconds_bucket{$$__tags}[5m])) by (le))'
 
           serviceMap:
             datasourceUid: prometheus
