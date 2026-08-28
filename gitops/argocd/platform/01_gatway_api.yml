@@ -1,27 +1,27 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: gateway-api
-  namespace: argocd
-  annotations:
-    argocd.argoproj.io/sync-wave: "0"
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: gateway-api
+#   namespace: argocd
+#   annotations:
+#     argocd.argoproj.io/sync-wave: "0"
 
-spec:
-  project: default
+# spec:
+#   project: default
 
-  source:
-    repoURL: https://github.com/Kushagra-ghadigaonkar/TaskPilot
-    targetRevision: main
-    path: gitops/argocd/gateway-api
+#   source:
+#     repoURL: https://github.com/Kushagra-ghadigaonkar/TaskPilot
+#     targetRevision: main
+#     path: gitops/argocd/gateway-api
 
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: default
+#   destination:
+#     server: https://kubernetes.default.svc
+#     namespace: default
 
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
+#   syncPolicy:
+#     automated:
+#       prune: true
+#       selfHeal: true
 
-    syncOptions:
-      - ServerSideApply=true
+#     syncOptions:
+#       - ServerSideApply=true
