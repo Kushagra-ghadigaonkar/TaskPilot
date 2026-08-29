@@ -24,6 +24,9 @@ spec:
           envFrom:
             - secretRef:
                 name: taskpilot-secrets
+          env:
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
           readinessProbe:
             exec: 
               command: ["sh","-c","pg_isready -U $(POSTGRES_USER) -d $(POSTGRES_DB)"]
