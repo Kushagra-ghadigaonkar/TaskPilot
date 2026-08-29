@@ -42,14 +42,13 @@ spec:
   volumeClaimTemplates:
     - metadata:
         name: data
-        namespace: taskpilot
-        spec:
+      spec:
         storageClassName: gp3
         accessModes:
           - ReadWriteOnce
         resources:
           requests:
-            storage: 1Gi
+            torage: 1Gi
 
 
 
