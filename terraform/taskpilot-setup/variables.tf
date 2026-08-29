@@ -7,7 +7,7 @@ variable "region" {
 variable "cluster_name" {
   description = "Used to denote clustername"
   type=string
-  default = "taskpilot-cluster"
+  default = "taskpilot"
 }
 
 variable "kubernetes_version" {
@@ -37,13 +37,13 @@ variable "node_min_size" {
 variable "node_max_size" {
   description = "Maximum nodes"
   type        = number
-  default     = 1
+  default     = 2
 }
 
 variable "node_disk_size" {
   description = "Ebs volume size"
   type        = number
-  default     = 10
+  default     = 20
 }
 
 variable "postgres_secret_name" {

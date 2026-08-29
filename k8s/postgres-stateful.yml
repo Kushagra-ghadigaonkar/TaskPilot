@@ -43,10 +43,20 @@ spec:
     - metadata:
         name: data
         namespace: taskpilot
-      spec:
-        storageClassName: local-storage
+        spec:
+        storageClassName: gp3
         accessModes:
           - ReadWriteOnce
         resources:
           requests:
             storage: 1Gi
+
+
+
+      # spec:
+      #   storageClassName: local-storage
+      #   accessModes:
+      #     - ReadWriteOnce
+      #   resources:
+      #     requests:
+      #       storage: 1Gi

@@ -13,6 +13,8 @@ module "vpc" {
   enable_dns_hostnames = true   # Enables From ip address -> assign hostname
   enable_dns_support   = true   # Enables dns resolver which convert dns hostname into ip addresses throughout vpc
 
+  map_public_ip_on_launch = true
+  
   public_subnet_tags = {
     "kubernetes.io/role/elb" = 1
   }
